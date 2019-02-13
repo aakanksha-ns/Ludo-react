@@ -1,0 +1,128 @@
+.player-name {
+  padding-top: 20px;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 1px 2px rgba(black, 0.15);
+}
+
+.player-info {
+  font-family: "Montserrat", sans-serif;
+  background-color: #fac564;
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/5908/food.png);
+}
+
+.button-padding {
+  padding-bottom: 30px;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.play-button {
+  background-color: #269ce9;
+  border-color: #269ce9;
+  display: inline-block;
+  zoom: 1;
+  padding: 6px 20px;
+  cursor: pointer;
+  border: 1px solid #bbb;
+  overflow: visible;
+  font: bold 13px arial, helvetica, sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #555;
+}
+
+.play-button:hover {
+  background-color: #70b9e8;
+}
+
+.play-button:active {
+  background: #269ce9;
+}
+
+.dice {
+  height: 150px;
+  width: 150px;
+}
+
+.dice-center-align {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.player-home {
+  height: 300px;
+  width: 300px;
+  border-style: solid;
+  border-width: 50px;
+}
+
+.border-red {
+  border-color: red;
+}
+.border-blue {
+  border-color: blue;
+}
+.border-green {
+  border-color: green;
+}
+.border-yellow {
+  border-color: yellow;
+}
+
+.coin-red {
+  background-color: red;
+}
+.coin-blue {
+  background-color: blue;
+}
+.coin-green {
+  background-color: green;
+}
+.coin-yellow {
+  background-color: yellow;
+}
+
+.coin-common {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.player-coin {
+  height: 100px;
+  padding-top: 30px;
+  padding-left: 30px;
+}
+
+.square {
+  height: 50px;
+  width: 50px;
+  border-style: solid;
+  border-width: 3px;
+}
+
+.flex-display {
+  display: flex;
+  align-items: center;
+}
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
