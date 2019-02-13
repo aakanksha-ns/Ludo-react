@@ -147,7 +147,7 @@ class LudoGame extends React.Component {
         position2: 0,
         position3: 0,
         position4: 0,
-        color: "red",
+        color: "yellow",
         playerId: 1
       },
       {
@@ -163,7 +163,7 @@ class LudoGame extends React.Component {
         position2: 0,
         position3: 0,
         position4: 0,
-        color: "yellow",
+        color: "green",
         playerId: 3
       },
       {
@@ -171,7 +171,7 @@ class LudoGame extends React.Component {
         position2: 0,
         position3: 0,
         position4: 0,
-        color: "green",
+        color: "red",
         playerId: 4
       }
     ]
@@ -209,6 +209,13 @@ class LudoGame extends React.Component {
             <HorizontalStack data={squares.slice(0, 6)} />
             <HorizontalStack data={squares.slice(0, 6)} />
             <HorizontalStack data={squares.slice(0, 6)} />
+          </div>
+          <div>
+            <img
+              className="home-center"
+              src={"./images/middle_home.png"}
+              alt="home"
+            />
           </div>
           <div>
             <HorizontalStack data={squares.slice(0, 6)} />

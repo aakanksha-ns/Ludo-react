@@ -126,3 +126,8 @@
 .float-left {
   float: left;
 }
+
+.home-center {
+  height: 150px;
+  width: 150px;
+}
