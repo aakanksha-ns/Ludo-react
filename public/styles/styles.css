@@ -83,16 +83,16 @@
 }
 
 .coin-red {
-  background-color: red;
+  background-color: rgb(160, 64, 64);
 }
 .coin-blue {
-  background-color: blue;
+  background-color: rgb(51, 51, 184);
 }
 .coin-green {
-  background-color: green;
+  background-color: #527c4f;
 }
 .coin-yellow {
-  background-color: yellow;
+  background-color: #b2b030;
 }
 
 .coin-common {
@@ -130,4 +130,20 @@
 .home-center {
   height: 150px;
   width: 150px;
+}
+
+.square-blue {
+  background-color: blue;
+}
+
+.square-red {
+  background-color: red;
+}
+
+.square-yellow {
+  background-color: yellow;
+}
+
+.square-green {
+  background-color: green;
 }
