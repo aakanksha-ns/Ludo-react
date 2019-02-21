@@ -7,48 +7,20 @@ class PlayerHome extends React.Component {
       <div
         className={
           "player-home col-sm-12 border-" +
-          this.props.info.color +
+          this.props.color +
           " " +
           this.props.class
         }
       >
         <div className="row">
-          <div className="col-sm-6 player-coin">
-            <Coin
-              color={
-                this.props.info.position1 === 0
-                  ? this.props.info.color
-                  : "invisible"
-              }
-            />
-          </div>
-          <div className="col-sm-6 player-coin">
-            <Coin
-              color={
-                this.props.info.position2 === 0
-                  ? this.props.info.color
-                  : "invisible"
-              }
-            />
-          </div>
-          <div className="col-sm-6 player-coin">
-            <Coin
-              color={
-                this.props.info.position3 === 0
-                  ? this.props.info.color
-                  : "invisible"
-              }
-            />
-          </div>
-          <div className="col-sm-6 player-coin">
-            <Coin
-              color={
-                this.props.info.position4 === 0
-                  ? this.props.info.color
-                  : "invisible"
-              }
-            />
-          </div>
+          {this.props.tokens.map((token, index) => (
+            <div className="col-sm-6 player-coin" key={index}>
+              <Coin
+                color={token.position === -1 ? this.props.color : "invisible"}
+                clickable={token.clickable}
+              />
+            </div>
+          ))}
         </div>
       </div>
     );

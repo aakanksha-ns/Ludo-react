@@ -13,35 +13,40 @@ for (var i = 0; i < 52; i++) {
     squareId: "white" + i,
     squareColor: "white",
     squarePlayer: "",
-    squarePlayerColor: ""
+    squarePlayerColor: "",
+    clickable: false
   });
 }
 for (i = 0; i < 5; i++) {
   redHomeSquares.push({
     squareId: "red" + i,
     squareColor: "red",
-    squarePlayer: ""
+    squarePlayer: "",
+    clickable: false
   });
 }
 for (i = 0; i < 5; i++) {
   blueHomeSquares.push({
     squareId: "blue" + i,
     squareColor: "blue",
-    squarePlayer: ""
+    squarePlayer: "",
+    clickable: false
   });
 }
 for (i = 0; i < 5; i++) {
   yellowHomeSquares.push({
     squareId: "yellow" + i,
     squareColor: "yellow",
-    squarePlayer: ""
+    squarePlayer: "",
+    clickable: false
   });
 }
 for (i = 0; i < 5; i++) {
   greenHomeSquares.push({
     squareId: "green" + i,
     squareColor: "green",
-    squarePlayer: ""
+    squarePlayer: "",
+    clickable: false
   });
 }
 
@@ -56,36 +61,96 @@ class Board extends React.Component {
     diceValue: 1,
     players: [
       {
-        position1: 0,
-        position2: 0,
-        position3: 0,
-        position4: 0,
+        tokens: [
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          }
+        ],
         color: "green",
-        playerId: 1
+        playerId: 1,
+        startPosition: 1
       },
       {
-        position1: 0,
-        position2: 0,
-        position3: 0,
-        position4: 0,
+        tokens: [
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          }
+        ],
         color: "yellow",
-        playerId: 2
+        playerId: 2,
+        startPosition: 14
       },
       {
-        position1: 0,
-        position2: 0,
-        position3: 0,
-        position4: 0,
+        tokens: [
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          }
+        ],
         color: "red",
-        playerId: 3
+        playerId: 3,
+        startPosition: 27
       },
       {
-        position1: 0,
-        position2: 0,
-        position3: 0,
-        position4: 0,
+        tokens: [
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          },
+          {
+            position: -1,
+            clickable: false
+          }
+        ],
         color: "blue",
-        playerId: 4
+        playerId: 4,
+        startPosition: 40
       }
     ],
     squares: squares,
@@ -95,10 +160,31 @@ class Board extends React.Component {
     greenHomeSquares: greenHomeSquares
   };
 
+  highlightToken = diceVal => {
+    var index = this.state.currentPlayer - 1;
+    var player = this.state.players[index];
+    if (diceVal === 6) {
+      var { players } = this.state;
+      var newPlayers = [...players];
+      newPlayers[index] = { ...players[index] };
+      for (var i = 0; i < 4; i++) {
+        if (player.tokens[i].position === -1) {
+          newPlayers[index].tokens[i] = {
+            ...players[index].tokens[i],
+            clickable: true
+          };
+        }
+      }
+      this.setState({ players: newPlayers });
+    }
+  };
+
   rollDice = () => {
+    var diceVal = Math.floor(Math.random() * 6) + 1;
     this.setState({
-      diceValue: Math.floor(Math.random() * 6) + 1
+      diceValue: diceVal
     });
+    this.highlightToken(diceVal);
   };
 
   render() {
@@ -109,7 +195,8 @@ class Board extends React.Component {
             <div className="flex-display">
               <div>
                 <PlayerHome
-                  info={this.state.players[0]}
+                  tokens={this.state.players[0].tokens}
+                  color={this.state.players[0].color}
                   class="float-right no-padding"
                 />
               </div>
@@ -128,7 +215,10 @@ class Board extends React.Component {
                 </div>
               </div>
               <div>
-                <PlayerHome info={this.state.players[1]} />
+                <PlayerHome
+                  tokens={this.state.players[1].tokens}
+                  color={this.state.players[1].color}
+                />
               </div>
             </div>
             <div className="flex-display">
@@ -177,7 +267,10 @@ class Board extends React.Component {
             </div>
             <div className="flex-display">
               <div>
-                <PlayerHome info={this.state.players[2]} />
+                <PlayerHome
+                  tokens={this.state.players[2].tokens}
+                  color={this.state.players[1].color}
+                />
               </div>
               <div>
                 <div className="flex-display">
@@ -195,7 +288,10 @@ class Board extends React.Component {
                 </div>
               </div>
               <div>
-                <PlayerHome info={this.state.players[3]} />
+                <PlayerHome
+                  tokens={this.state.players[3].tokens}
+                  color={this.state.players[1].color}
+                />
               </div>
             </div>
           </div>
