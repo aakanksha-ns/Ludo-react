@@ -15,7 +15,11 @@ class Square extends React.Component {
     } else {
       return (
         <div
-          className={"square square-" + this.props.square.squareColor}
+          className={
+            "square square-" +
+            this.props.square.squareColor +
+            (this.props.square.clickable ? " clickable-token" : " ")
+          }
           id={this.props.square.squareId}
         />
       );

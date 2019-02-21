@@ -18,6 +18,8 @@ class PlayerHome extends React.Component {
               <Coin
                 color={token.position === -1 ? this.props.color : "invisible"}
                 clickable={token.clickable}
+                tokenIndex={index}
+                handleTokenClick={this.props.handleTokenClick}
               />
             </div>
           ))}

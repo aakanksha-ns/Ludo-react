@@ -64,100 +64,125 @@ class Board extends React.Component {
         tokens: [
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            squaresMoved: 0,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            squaresMoved: 0,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            squaresMoved: 0,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            squaresMoved: 0,
+            homeSquarePosition: -1
           }
         ],
         color: "green",
         playerId: 1,
-        startPosition: 1
+        startPosition: 40,
+        homeSquares: greenHomeSquares
       },
       {
         tokens: [
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            squaresMoved: 0,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            squaresMoved: 0,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            squaresMoved: 0,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            squaresMoved: 0,
+            homeSquarePosition: -1
           }
         ],
         color: "yellow",
         playerId: 2,
-        startPosition: 14
+        startPosition: 1,
+        homeSquares: yellowHomeSquares
       },
       {
         tokens: [
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            homeSquarePosition: -1
           }
         ],
         color: "red",
         playerId: 3,
-        startPosition: 27
+        startPosition: 27,
+        homeSquares: redHomeSquares
       },
       {
         tokens: [
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            homeSquarePosition: -1
           },
           {
             position: -1,
-            clickable: false
+            clickable: false,
+            homeSquarePosition: -1
           }
         ],
         color: "blue",
         playerId: 4,
-        startPosition: 40
+        startPosition: 14,
+        homeSquares: blueHomeSquares
       }
     ],
     squares: squares,
-    redHomeSquares: redHomeSquares,
-    yellowHomeSquares: yellowHomeSquares,
-    blueHomeSquares: blueHomeSquares,
-    greenHomeSquares: greenHomeSquares
+    currentlyHighlightedSquare: -1
   };
 
   highlightToken = diceVal => {
@@ -179,12 +204,45 @@ class Board extends React.Component {
     }
   };
 
+  toggleSquareHighlight = (i, squareType) => {
+    if (!squareType) {
+      var { squares } = this.state,
+        newSquares = [...squares];
+      newSquares[i] = { ...squares[i], clickable: !squares[i].clickable };
+      this.setState({ squares: newSquares });
+    } else {
+    }
+  };
+
   rollDice = () => {
     var diceVal = Math.floor(Math.random() * 6) + 1;
     this.setState({
       diceValue: diceVal
     });
     this.highlightToken(diceVal);
+  };
+
+  handleTokenClick = i => {
+    var currToken = this.state.players[this.state.currentPlayer - 1].tokens[i];
+    var currHomePosition = this.state.players[this.state.currentPlayer - 1]
+      .tokens[i].homeSquarePosition;
+    if (currToken.position === -1) {
+      this.toggleSquareHighlight(
+        this.state.players[this.state.currentPlayer - 1].startPosition
+      );
+    } else if (currToken.squaresMoved + this.state.diceVal < 51) {
+      this.toggleSquareHighlight((currToken + this.state.diceVal) % 52);
+    } else if (
+      currToken.squaresMoved < 51 &&
+      currToken.squaresMoved + this.state.diceVal > 51
+    ) {
+      this.toggleSquareHighlight(
+        this.state.diceVal - (51 - currToken.squaresMoved) - 1,
+        "home"
+      );
+    } else {
+      this.toggleSquareHighlight(this.state.diceVal + currHomePosition, "home");
+    }
   };
 
   render() {
@@ -198,6 +256,7 @@ class Board extends React.Component {
                   tokens={this.state.players[0].tokens}
                   color={this.state.players[0].color}
                   class="float-right no-padding"
+                  handleTokenClick={this.handleTokenClick}
                 />
               </div>
               <div>
@@ -208,7 +267,7 @@ class Board extends React.Component {
                   />
                   <SquareStack
                     data={this.state.squares[6]}
-                    homeSquares={this.state.yellowHomeSquares}
+                    homeSquares={this.state.players[1].homeSquares}
                     middleStack={true}
                   />
                   <SquareStack data={this.state.squares.slice(0, 6)} />
@@ -218,6 +277,7 @@ class Board extends React.Component {
                 <PlayerHome
                   tokens={this.state.players[1].tokens}
                   color={this.state.players[1].color}
+                  handleTokenClick={this.handleTokenClick}
                 />
               </div>
             </div>
@@ -230,7 +290,7 @@ class Board extends React.Component {
                 <SquareStack
                   data={this.state.squares[38]}
                   middleStack={true}
-                  homeSquares={this.state.greenHomeSquares}
+                  homeSquares={this.state.players[0].homeSquares}
                   horizontalStack={true}
                 />
                 <SquareStack
@@ -255,7 +315,7 @@ class Board extends React.Component {
                   data={this.state.squares[12]}
                   horizontalStack={true}
                   middleStack={true}
-                  homeSquares={this.state.blueHomeSquares}
+                  homeSquares={this.state.players[3].homeSquares}
                   reverse={true}
                 />
                 <SquareStack
@@ -269,7 +329,8 @@ class Board extends React.Component {
               <div>
                 <PlayerHome
                   tokens={this.state.players[2].tokens}
-                  color={this.state.players[1].color}
+                  color={this.state.players[2].color}
+                  handleTokenClick={this.handleTokenClick}
                 />
               </div>
               <div>
@@ -281,7 +342,7 @@ class Board extends React.Component {
                   <SquareStack
                     data={this.state.squares[25]}
                     reverse={true}
-                    homeSquares={this.state.redHomeSquares}
+                    homeSquares={this.state.players[2].homeSquares}
                     middleStack={true}
                   />
                   <SquareStack data={this.state.squares.slice(19, 25)} />
@@ -290,7 +351,8 @@ class Board extends React.Component {
               <div>
                 <PlayerHome
                   tokens={this.state.players[3].tokens}
-                  color={this.state.players[1].color}
+                  color={this.state.players[3].color}
+                  handleTokenClick={this.handleTokenClick}
                 />
               </div>
             </div>
